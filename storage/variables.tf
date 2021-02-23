@@ -9,6 +9,6 @@ variable "region" {
 }
 
 variable "credentials_file" {
-  default = "gcpServiceAccount/credentials.json"
+  default = "../gcpServiceAccount/credentials.json"
   description = "credential file name"
 }

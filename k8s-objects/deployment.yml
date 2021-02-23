@@ -39,17 +39,3 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
-#NOTE: comment out `volumeMounts` section for configmap and\or secret guide
-        volumeMounts:
-        - name: secret-volume
-          mountPath: /secrets/
-        - name: config-volume
-          mountPath: /configs/
-#NOTE: comment out `volumes` section for configmap and\or secret guide
-        volumes:
-        - name: secret-volume
-          secret:
-            secretName: sample-secret
-        - name: config-volume
-          configMap:
-            name: sample-config #name of our configmap object

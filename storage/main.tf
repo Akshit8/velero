@@ -20,8 +20,4 @@ resource "google_storage_bucket" "k8s-backup" {
     location = "ASIA-EAST1"
 
     storage_class = "STANDARD"
-
-    labels {
-        usage = "storage bucket for k8s backup and restoration"
-    }
 }

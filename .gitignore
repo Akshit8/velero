@@ -1,2 +1,4 @@
 gcpServiceAccount/credentials.json
-storage/.terraform/plugins
+storage/.terraform
+storage/.terraform*
+storage/terraform*
