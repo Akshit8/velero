@@ -117,6 +117,8 @@ velero install \
     --secret-file ./gcpServiceAccount/credentials.json
 ```
 
+**Note**: it will create a new namespace velero to hold all components.
+
 To verify above installation run following commands
 
 ```bash
@@ -249,6 +251,9 @@ kubectl get all -n sample
 
 <img src="assets/samplens.png">
 
+## Conclusion
+- We have successfully simulated a cluster-failover and migration, while restoring our cluster back to original state.
+- Velero can also backup stateful workloads and volumes. The focus of this tutorial was to only backup stateless workloads.
 
 ## Author
 **Akshit Sadana <akshitsadana@gmail.com>**
