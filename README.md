@@ -3,6 +3,34 @@ Backing-up, restoring and migrating kubernetes cluster with velero📦 .
 
 <img src="assets/veleroBanner.png">
 
+Velero is a light weight tool to safely backup, restore, handle cluster-failovers, and migrate Kubernetes cluster resources and persistent volumes.
+
+## Creating Kubernetes cluster with Kind
+[Kind](https://kind.sigs.k8s.io/) is a light weight utility to create single-node Kubernetes cluster on a docker container for testing purposes. Using kind will allow us to create two test cluster of different versions quickly, thus allowing us to simulate cluster-migrations.<br>
+For installing kind:
+- checkout [kind-quickstart](https://kind.sigs.k8s.io/docs/user/quick-start/)
+- Or watch [this](https://www.youtube.com/watch?v=m-IlbCgSzkc) video
+
+CAUTION 🛑 🛑 :
+- Make sure Docker is installed on your machine/
+- If you are using kubernetes(v 1.17), do check your coredns is working. For verifying status of coredns click [here](https://stackoverflow.com/questions/53075796/coredns-pods-have-crashloopbackoff-or-error-state).
+
+## Service account for terraform and velero
+Instructions for creating a service account with necessary permission [here](../gcpServiceAccount/README.md).
+
+## Setting up storage plugin for velero
+
+
+## Author
+**Akshit Sadana <akshitsadana@gmail.com>**
+
+- Github: [@Akshit8](https://github.com/Akshit8)
+- LinkedIn: [@akshitsadana](https://www.linkedin.com/in/akshit-sadana-b051ab121/)
+
+## License
+Licensed under the MIT License
+
+
 ## starting a docker conatiner with terraform installed
 ```bash
 docker run -it --rm -v ${PWD}/storage:/storage -w /storage akshit8/terraform 
