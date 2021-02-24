@@ -1,5 +1,5 @@
 # velero
-Backing-up, restoring and migrating kubernetes cluster with velero📦.
+Backing-up, restoring and migrating kubernetes cluster with velero📦 . <br>
 
 <img src="assets/veleroBanner.png">
 
