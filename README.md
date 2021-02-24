@@ -88,6 +88,43 @@ mv /tmp/velero-v1.5.1-linux-amd64/velero /usr/local/bin/velero
 chmod +x /usr/local/bin/velero
 ```
 
+## Deploying Kubernetes objects in a sample namespace
+Kubernetes object that I use for this tutorial is located in [k8s-objects](./k8s-objects) folder.
+
+```bash
+kubectl create ns sample
+
+kubectl -n sample apply -f ./k8s-objects
+```
+
+<img src="assets/samplens.png">
+
+<img src="assets/samplens2.png">
+
+## Configuring Velero for backing-up sample namespace
+
+- Using Velero CLI that we installed previously, we need to deploy some components(that velero use) inside our cluster and configure them, so that velero can access our cloud storage bucket
+
+```bash
+# setting the bucket name
+export BUCKET=velero-akshit
+
+# installing velero with provider gcp
+velero install \
+    --provider gcp \
+    --plugins velero/velero-plugin-for-gcp:v1.1.0 \
+    --bucket $BUCKET \
+    --secret-file ./gcpServiceAccount/credentials.json
+```
+
+To verify above installation run following commands
+
+```bash
+root@my-vm:/work# kubectl -n velero get pods
+NAME                      READY   STATUS    RESTARTS   AGE
+velero-86bb45cdfb-987ps   1/1     Running   0          23s
+```
+
 
 
 ## Author
