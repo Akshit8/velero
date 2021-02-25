@@ -13,7 +13,7 @@ For installing kind:
 
 **CAUTION** 🛑 🛑 :
 - Make sure Docker is installed on your machine.
-- If you are using Kubernetes(version **1.17**), do check if **coredns** is working. For verifying status of coredns click [here](https://stackoverflow.com/questions/53075796/coredns-pods-have-crashloopbackoff-or-error-state).
+- If you are using Kubernetes(version **1.17**), do check if **coredns** is working. For verifying status of coredns check this post [here](https://stackoverflow.com/questions/53075796/coredns-pods-have-crashloopbackoff-or-error-state).
 
 ## Service account for Terraform and Velero
 Instructions for creating a service account with necessary permission [here](../gcpServiceAccount/README.md).
@@ -27,6 +27,8 @@ You can grab **Terraform** CLI from [here](https://www.terraform.io/downloads.ht
 ```bash
 docker run -it --rm -v ${PWD}/storage:/storage -w /storage akshit8/terraform 
 ```
+
+**Note**: akshit8/terraform is a Debian docker container installed with Terrafotm CLI (v 0.14.7).<br>
 
 Once the container has been created, run the following commands to create a storage bucket on GCP.
 
@@ -68,7 +70,7 @@ chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
 ```
 
-To verify kubectl and our `test-cluster` run
+To verify kubectl and our `test-cluster` run following command
 
 ```bash
 root@my-vm:/work# kubectl get nodes
@@ -161,7 +163,7 @@ Verify on Google Cloud Console
 
 Our bucket contain backup files of all **Kuberntes objects** that were deployed inside `sample` namespace.
 
-## Deleting object inside sample namespace
+## Deleting object inside sample namespace(cluster-failover)
 ```bash
 kubectl -n sample delete -f ./k8s-objects
 ```
@@ -198,7 +200,7 @@ NAME                                   DESIRED   CURRENT   READY   AGE
 replicaset.apps/sample-app-6ffc75c46   2         2         2       24s
 ```
 
-## Migrating cluster from version 1.18 to 1.19
+## Migrating cluster from version 1.18 to 1.19(cluster-migration)
 As before we'll use kind to spin another light weight cluster with version **1.19**
 
 ```bash
@@ -213,7 +215,7 @@ NAME                           STATUS   ROLES    AGE    VERSION
 test-cluster-2-control-plane   Ready    master   6m1s   v1.19.0
 ```
 
-### Installing velero inside new cluster
+### Installing Velero inside new cluster
 - repeat the above steps to install Velero again
 - make sure deployment logs displays no error
 - verify all components inside namespace velero are running.
@@ -235,7 +237,7 @@ velero restore create sample-namespace-backup --from-backup sample-namespace-bac
 Verifying the restore
 
 ```bash
-velero restore describe sample-namespace-backu
+root@my-vm:/work/velero# velero restore describe sample-namespace-backup
 
 Phase:  Completed
 
@@ -250,6 +252,8 @@ kubectl get all -n sample
 ```
 
 <img src="assets/samplens.png">
+
+**Note**: during migration, velero syncs with our storage bucket to get list of all backups, but it doesn't apply or creates these backups automatically in your cluster.
 
 ## Conclusion
 - We have successfully simulated a cluster-failover and migration, while restoring our cluster back to original state.
